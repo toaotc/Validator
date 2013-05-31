@@ -1,0 +1,22 @@
+{
+    "name": "toa/validator",
+    "type": "library",
+    "description": "Toa Validator Component",
+    "keywords": [],
+    "homepage": "https://github.com/toaotc/Validator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Enrico Thies",
+            "email": "enrico.thies@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/validator": ">=2.1,<2.3-dev"
+    },
+    "autoload": {
+        "psr-0": { "Toa\\Component\\Validator": "" }
+    },
+    "target-dir": "Toa/Component/Validator",
+    "minimum-stability": "dev"
+}
