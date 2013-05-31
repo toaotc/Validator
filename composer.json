@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "symfony/validator": ">=2.1,<2.3-dev"
+        "symfony/validator": ">=2.1,<2.3-dev",
+        "goodby/csv": "*"
     },
     "autoload": {
         "psr-0": { "Toa\\Component\\Validator": "" }
