@@ -20,4 +20,9 @@ class VideoFile extends File
     );
 
     public $mimeTypesMessage = 'This file is not a valid video.';
+
+    public function validatedBy()
+    {
+        return get_parent_class().'Validator';
+    }
 }
