@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>This file is not a valid audio.</source>
+                <target>Diese Datei ist kein gültiges Audio.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>This file is not a valid video.</source>
+                <target>Diese Datei ist kein gültiges Video.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Each line should contain exactly {{ value }} columns.</source>
+                <target>Jede Zeile sollte exakt {{ value }} Spalten enthalten.</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>File should contain max. {{ value }} rows.</source>
+                <target>Die Datei sollte max. {{ value }} Zeilen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Found empty line.</source>
+                <target>Eine leere Zeile wurde gefunden.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
