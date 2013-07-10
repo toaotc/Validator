@@ -2,23 +2,68 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="1">
+            <!-- AudioFile -->
+            <trans-unit id="100">
                 <source>This file is not a valid audio.</source>
                 <target>Diese Datei ist kein gültiges Audio.</target>
             </trans-unit>
-            <trans-unit id="2">
+            <trans-unit id="101">
+                <source>The format of the audio could not be detected.</source>
+                <target>Das Format dieses Audios konnte nicht ermittelt werden.</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>The audio is too long ({{ duration }} seconds). Allowed maximum duration is {{ max_duration }} seconds.</source>
+                <target>Das Audio ist zu lang ({{ duration }} Sekunden). Die maximal erlaubte Länge ist {{ max_duration }} Sekunden.</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>The audio is too short ({{ duration }} seconds). Minimum duration expected is {{ min_duration }} seconds.</source>
+                <target>Das Audio ist zu kurz ({{ duration }} Sekunden). Die erlaubte Mindestlänge ist {{ min_duration }} Sekunden.</target>
+            </trans-unit>
+            
+            <!-- VideoFile -->
+            <trans-unit id="200">
                 <source>This file is not a valid video.</source>
                 <target>Diese Datei ist kein gültiges Video.</target>
             </trans-unit>
-            <trans-unit id="3">
+            <trans-unit id="201">
+                <source>The format of the video could not be detected.</source>
+                <target>Das Format dieses Videos konnte nicht ermittelt werden.</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>The video is too long ({{ duration }} seconds). Allowed maximum duration is {{ max_duration }} seconds.</source>
+                <target>Das Video ist zu lang ({{ duration }} Sekunden). Die maximal erlaubte Länge ist {{ max_duration }} Sekunden.</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>The video is too short ({{ duration }} seconds). Minimum duration expected is {{ min_duration }} seconds.</source>
+                <target>Das Video ist zu kurz ({{ duration }} Sekunden). Die erlaubte Mindestlänge ist {{ min_duration }} Sekunden.</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
+                <target>Das Video ist zu breit ({{ width }}px). Die maximal erlaubte Breite ist {{ max_width }}px.</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.</source>
+                <target>Das Video ist zu schmal ({{ width }}px). Die erforderliche Mindestbreite ist {{ min_width }}px.</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.</source>
+                <target>Das Video ist zu hoch ({{ height }}px). Die erlaubte Maximalhöhe ist {{ max_height }}px.</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.</source>
+                <target>Die Höhe des Videos ist zu gering ({{ height }}px). Die erforderliche Mindesthöhe ist {{ min_height }}px.</target>
+            </trans-unit>
+            
+            <!-- CsvFile -->
+            <trans-unit id="300">
                 <source>Each line should contain exactly {{ value }} columns.</source>
                 <target>Jede Zeile sollte exakt {{ value }} Spalten enthalten.</target>
             </trans-unit>
-            <trans-unit id="4">
+            <trans-unit id="301">
                 <source>File should contain max. {{ value }} rows.</source>
                 <target>Die Datei sollte max. {{ value }} Zeilen enthalten.</target>
             </trans-unit>
-            <trans-unit id="5">
+            <trans-unit id="302">
                 <source>Found empty line.</source>
                 <target>Eine leere Zeile wurde gefunden.</target>
             </trans-unit>
