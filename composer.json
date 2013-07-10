@@ -7,6 +7,9 @@
 			"email" : "enrico.thies@gmail.com"
 		}
 	],
+	"keywords" : [
+		"audio csv video validator"
+	],
 	"homepage" : "https://github.com/toaotc/Validator",
 	"license" : [
 		"MIT"
