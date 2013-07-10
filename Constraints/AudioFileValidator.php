@@ -15,7 +15,11 @@ use FFMpeg\FFMpeg;
  */
 class AudioFileValidator extends FileValidator
 {
+    /** @var FFMpeg\FFMpeg $ffmpeg */
     protected $ffmpeg;
+
+    /** @var FFMpeg\Media\AbstractStreamableMedia $media */
+    protected $media;
 
     /**
      * {@inheritdoc}
@@ -42,14 +46,14 @@ class AudioFileValidator extends FileValidator
         }
 
         try {
-            $audio = $this->ffmpeg->open($value);
+            $this->media = $this->ffmpeg->open($value);
+
+            $duration = $this->media->getStreams()->first()->get('duration');
         } catch (InvalidArgumentException $e) {
             $this->context->addViolation($constraint->formatNotDetectedMessage);
 
             return;
         }
-
-        $duration = $audio->getStreams()->first()->get('duration');
 
         if ($constraint->minDuration) {
             if (!ctype_digit((string) $constraint->minDuration)) {

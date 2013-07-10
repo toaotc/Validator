@@ -3,8 +3,6 @@
 namespace Toa\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\FileValidator;
-use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use FFMpeg\Exception\InvalidArgumentException;
 use FFMpeg\FFMpeg;
@@ -14,19 +12,8 @@ use FFMpeg\FFMpeg;
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class VideoFileValidator extends FileValidator
+class VideoFileValidator extends AudioFileValidator
 {
-    protected $ffmpeg;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize(ExecutionContextInterface $context)
-    {
-        parent::initialize($context);
-
-        $this->ffmpeg = FFMpeg::create();
-    }
     /**
      * {@inheritDoc}
      */
@@ -42,63 +29,8 @@ class VideoFileValidator extends FileValidator
             return;
         }
 
-        try {
-            $video = $this->ffmpeg->open($value);
-        } catch (InvalidArgumentException $e) {
-            $this->context->addViolation($constraint->formatNotDetectedMessage);
-
-            return;
-        }
-
-        $duration = $video->getStreams()->first()->get('duration');
-        $height = $video->getStreams()->first()->get('height');
-        $width = $video->getStreams()->first()->get('width');
-
-        if ($constraint->maxDuration) {
-            if (!ctype_digit((string) $constraint->maxDuration)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid maximum duration',
-                        $constraint->maxDuration
-                    )
-                );
-            }
-
-            if ($duration > $constraint->maxDuration) {
-                $this->context->addViolation(
-                    $constraint->maxDurationMessage,
-                    array(
-                        '{{ duration }}' => intval($duration),
-                        '{{ max_duration }}' => $constraint->maxDuration
-                    )
-                );
-
-                return;
-            }
-        }
-
-        if ($constraint->minDuration) {
-            if (!ctype_digit((string) $constraint->minDuration)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid minimum duration',
-                        $constraint->minDuration
-                    )
-                );
-            }
-
-            if ($duration < $constraint->minDuration) {
-                $this->context->addViolation(
-                    $constraint->minDurationMessage,
-                    array(
-                        '{{ duration }}' => intval($duration),
-                        '{{ min_duration }}' => $constraint->minDuration
-                    )
-                );
-
-                return;
-            }
-        }
+        $height = $this->media->getStreams()->first()->get('height');
+        $width = $this->media->getStreams()->first()->get('width');
 
         if ($constraint->maxHeight) {
             if (!ctype_digit((string) $constraint->maxHeight)) {

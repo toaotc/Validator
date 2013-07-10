@@ -2,8 +2,6 @@
 
 namespace Toa\Component\Validator\Constraints;
 
-use Symfony\Component\Validator\Constraints\File;
-
 /**
  * VideoFile
  *
@@ -11,7 +9,7 @@ use Symfony\Component\Validator\Constraints\File;
  *
  * @Annotation
  */
-class VideoFile extends File
+class VideoFile extends AudioFile
 {
     public $mimeTypes = array(
         'video/mp4',
@@ -22,8 +20,6 @@ class VideoFile extends File
     public $mimeTypesMessage = 'This file is not a valid video.';
     public $formatNotDetectedMessage = 'The format of the video could not be detected.';
 
-    public $maxDuration = null;
-    public $minDuration = null;
     public $maxWidth = null;
     public $minWidth = null;
     public $maxHeight = null;
