@@ -9,3 +9,4 @@ before_script:
   - sudo apt-get install -y ffmpeg
   - composer self-update
   - composer install --dev --prefer-source
+  - composer require "symfony/http-foundation":"~2.1"
