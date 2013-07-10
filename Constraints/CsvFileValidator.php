@@ -51,7 +51,7 @@ class CsvFileValidator extends FileValidator
         $interpreter = new Interpreter();
         $interpreter->unstrict();
         $interpreter->addObserver(
-            function(array $row) use ($context, $constraint, &$rowCounter) {
+            function (array $row) use ($context, $constraint, &$rowCounter) {
                 $rowCounter++;
                 if (!is_null($constraint->maxRowSize) && $rowCounter > $constraint->maxRowSize) {
                     throw new ValidatorException(
