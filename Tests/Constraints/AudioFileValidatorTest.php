@@ -57,8 +57,28 @@ class AudioFileValidatorTest extends \PHPUnit_Framework_TestCase
         $constraint = new AudioFile($config);
 
         $this->context->expects($this->once())
-        ->method('addViolation')
-        ->with('foo', $expected);
+            ->method('addViolation')
+            ->with('foo', $expected);
+
+        $this->validator->validate($value, $constraint);
+    }
+
+    /**
+     * @param mixed $value
+     * @param array $config
+     * @param array $expected
+     *
+     * @dataProvider exceptionSets
+     */
+    public function testException($value = null, $config = array(), $exception = '', $exceptionMessage = null)
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\File\File')) {
+            $this->markTestSkipped('The "HttpFoundation" component is not available');
+        }
+
+        $constraint = new AudioFile($config);
+
+        $this->setExpectedException($exception, $exceptionMessage);
 
         $this->validator->validate($value, $constraint);
     }
@@ -88,14 +108,37 @@ class AudioFileValidatorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 $audio,
-                array('minDuration' => 33, 'minDurationMessage' => 'foo'),
-                array('{{ duration }}' => '30', '{{ min_duration }}' => '33'),
-            ), // duration to short
+                array('maxDuration' => 3, 'maxDurationMessage' => 'foo'),
+                array('{{ duration }}' => '30.249796', '{{ max_duration }}' => '3')
+            ), // duration to long
             array(
                 $audio,
-                array('maxDuration' => 3, 'maxDurationMessage' => 'foo'),
-                array('{{ duration }}' => '30', '{{ max_duration }}' => '3')
-            ), // duration to long
+                array('minDuration' => 33, 'minDurationMessage' => 'foo'),
+                array('{{ duration }}' => '30.249796', '{{ min_duration }}' => '33'),
+            ), // duration to short
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function exceptionSets()
+    {
+        $audio = __DIR__.'/Fixtures/silence.mp3';
+
+        return array(
+            array(
+                $audio,
+                array('maxDuration' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid maximum duration',
+            ),
+            array(
+                $audio,
+                array('minDuration' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid minimum duration',
+            ),
         );
     }
 }

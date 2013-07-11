@@ -2,11 +2,12 @@
 
 namespace Toa\Component\Validator\Constraints;
 
+use Alchemy\BinaryDriver\Exception\ExecutionFailureException;
+use FFMpeg\FFMpeg;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
-use FFMpeg\FFMpeg;
 
 /**
  * Class AudioFileValidator
@@ -45,15 +46,9 @@ class AudioFileValidator extends FileValidator
             return;
         }
 
-        try {
-            $this->media = $this->ffmpeg->open($value);
+        $this->media = $this->ffmpeg->open($value);
 
-            $duration = intval($this->media->getStreams()->first()->get('duration'));
-        } catch (InvalidArgumentException $e) {
-            $this->context->addViolation($constraint->formatNotDetectedMessage);
-
-            return;
-        }
+        $duration = $this->media->getStreams()->first()->get('duration');
 
         if ($constraint->maxDuration) {
             if (!ctype_digit((string) $constraint->maxDuration)) {

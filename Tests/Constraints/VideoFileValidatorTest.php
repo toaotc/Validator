@@ -66,6 +66,26 @@ class VideoFileValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $value
+     * @param array $config
+     * @param array $expected
+     *
+     * @dataProvider exceptionSets
+     */
+    public function testException($value = null, $config = array(), $exception = '', $exceptionMessage = null)
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\File\File')) {
+            $this->markTestSkipped('The "HttpFoundation" component is not available');
+        }
+
+        $constraint = new VideoFile($config);
+
+        $this->setExpectedException($exception, $exceptionMessage);
+
+        $this->validator->validate($value, $constraint);
+    }
+
+    /**
      * @return array
      */
     public function validSets()
@@ -92,19 +112,14 @@ class VideoFileValidatorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 $video,
-                array('minDuration' => 12, 'minDurationMessage' => 'foo'),
-                array('{{ duration }}' => '11', '{{ min_duration }}' => '12'),
-            ), // duration to short
-            array(
-                $video,
                 array('maxDuration' => 3, 'maxDurationMessage' => 'foo'),
-                array('{{ duration }}' => '11', '{{ max_duration }}' => '3')
+                array('{{ duration }}' => '11.516667', '{{ max_duration }}' => '3')
             ), // duration to long
             array(
                 $video,
-                array('minHeight' => 300, 'minHeightMessage' => 'foo'),
-                array('{{ height }}' => '240', '{{ min_height }}' => '300')
-            ), // height to small
+                array('minDuration' => 12, 'minDurationMessage' => 'foo'),
+                array('{{ duration }}' => '11.516667', '{{ min_duration }}' => '12'),
+            ), // duration to short
             array(
                 $video,
                 array('maxHeight' => 3, 'maxHeightMessage' => 'foo'),
@@ -112,14 +127,54 @@ class VideoFileValidatorTest extends \PHPUnit_Framework_TestCase
             ), // height to big
             array(
                 $video,
-                array('minWidth' => 640, 'minWidthMessage' => 'foo'),
-                array('{{ width }}' => '480', '{{ min_width }}' => '640')
-            ), // width to small
+                array('minHeight' => 300, 'minHeightMessage' => 'foo'),
+                array('{{ height }}' => '240', '{{ min_height }}' => '300')
+            ), // height to small
             array(
                 $video,
                 array('maxWidth' => 3, 'maxWidthMessage' => 'foo'),
                 array('{{ width }}' => '480', '{{ max_width }}' => '3')
             ), // width to big
+            array(
+                $video,
+                array('minWidth' => 640, 'minWidthMessage' => 'foo'),
+                array('{{ width }}' => '480', '{{ min_width }}' => '640')
+            ), // width to small
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function exceptionSets()
+    {
+        $video = __DIR__.'/Fixtures/white.m4v';
+
+        return array(
+            array(
+                $video,
+                array('maxHeight' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid maximum height',
+            ),
+            array(
+                $video,
+                array('minHeight' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid minimum height',
+            ),
+            array(
+                $video,
+                array('maxWidth' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid maximum width',
+            ),
+            array(
+                $video,
+                array('minWidth' => '3a'),
+                'Symfony\Component\Validator\Exception\ConstraintDefinitionException',
+                '"3a" is not a valid minimum width',
+            ),
         );
     }
 }
