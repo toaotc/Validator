@@ -66,9 +66,10 @@ class VideoFileValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param mixed $value
-     * @param array $config
-     * @param array $expected
+     * @param mixed  $value
+     * @param array  $config
+     * @param string $exception
+     * @param string $exceptionMessage
      *
      * @dataProvider exceptionSets
      */
