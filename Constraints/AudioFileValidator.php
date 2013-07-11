@@ -48,34 +48,11 @@ class AudioFileValidator extends FileValidator
         try {
             $this->media = $this->ffmpeg->open($value);
 
-            $duration = $this->media->getStreams()->first()->get('duration');
+            $duration = intval($this->media->getStreams()->first()->get('duration'));
         } catch (InvalidArgumentException $e) {
             $this->context->addViolation($constraint->formatNotDetectedMessage);
 
             return;
-        }
-
-        if ($constraint->minDuration) {
-            if (!ctype_digit((string) $constraint->minDuration)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid minimum duration',
-                        $constraint->minDuration
-                    )
-                );
-            }
-
-            if ($duration < $constraint->minDuration) {
-                $this->context->addViolation(
-                    $constraint->minDurationMessage,
-                    array(
-                        '{{ duration }}' => intval($duration),
-                        '{{ min_duration }}' => $constraint->minDuration
-                    )
-                );
-
-                return;
-            }
         }
 
         if ($constraint->maxDuration) {
@@ -92,8 +69,31 @@ class AudioFileValidator extends FileValidator
                 $this->context->addViolation(
                     $constraint->maxDurationMessage,
                     array(
-                        '{{ duration }}' => intval($duration),
+                        '{{ duration }}' => $duration,
                         '{{ max_duration }}' => $constraint->maxDuration
+                    )
+                );
+
+                return;
+            }
+        }
+
+        if ($constraint->minDuration) {
+            if (!ctype_digit((string) $constraint->minDuration)) {
+                throw new ConstraintDefinitionException(
+                    sprintf(
+                        '"%s" is not a valid minimum duration',
+                        $constraint->minDuration
+                    )
+                );
+            }
+
+            if ($duration < $constraint->minDuration) {
+                $this->context->addViolation(
+                    $constraint->minDurationMessage,
+                    array(
+                        '{{ duration }}' => $duration,
+                        '{{ min_duration }}' => $constraint->minDuration
                     )
                 );
 
