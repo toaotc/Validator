@@ -17,7 +17,7 @@
             </trans-unit>
             <trans-unit id="103">
                 <source>The audio is too short ({{ duration }} seconds). Minimum duration expected is {{ min_duration }} seconds.</source>
-                <target>Das Audio ist zu kurz ({{ duration }} Sekunden). Die erlaubte Mindestlänge ist {{ min_duration }} Sekunden.</target>
+                <target>Das Audio ist zu kurz ({{ duration }} Sekunden). Die erforderliche Mindestlänge ist {{ min_duration }} Sekunden.</target>
             </trans-unit>
             
             <!-- VideoFile -->
@@ -35,7 +35,7 @@
             </trans-unit>
             <trans-unit id="203">
                 <source>The video is too short ({{ duration }} seconds). Minimum duration expected is {{ min_duration }} seconds.</source>
-                <target>Das Video ist zu kurz ({{ duration }} Sekunden). Die erlaubte Mindestlänge ist {{ min_duration }} Sekunden.</target>
+                <target>Das Video ist zu kurz ({{ duration }} Sekunden). Die erforderliche Mindestlänge ist {{ min_duration }} Sekunden.</target>
             </trans-unit>
             <trans-unit id="204">
                 <source>The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
