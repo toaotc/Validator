@@ -16,7 +16,7 @@
 	],
 	"require" : {
 		"symfony/validator" : "~2.1",
-		"php-ffmpeg/php-ffmpeg" : "~0.2.4",
+		"php-ffmpeg/php-ffmpeg" : "~0.3@dev",
 		"php" : ">=5.3.3",
 		"goodby/csv" : "*"
 	},
@@ -29,5 +29,8 @@
 		}
 	},
 	"target-dir" : "Toa/Component/Validator",
-	"minimum-stability" : "dev"
+	"minimum-stability" : "dev",
+	"suggest" : {
+		"symfony/config" : "infrastructure for loading configurations from different data sources"
+	}
 }
