@@ -64,8 +64,8 @@
                 <target>File should contain max. {{ value }} rows.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>Found empty line.</source>
-                <target>Found empty line.</target>
+                <source>Found empty line at {{ row }}.</source>
+                <target>Found empty line at {{ row }}.</target>
             </trans-unit>
         </body>
     </file>

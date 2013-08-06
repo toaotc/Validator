@@ -64,8 +64,8 @@
                 <target>Die Datei sollte max. {{ value }} Zeilen enthalten.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>Found empty line.</source>
-                <target>Eine leere Zeile wurde gefunden.</target>
+                <source>Found empty line at {{ row }}.</source>
+                <target>Eine leere Zeile wurde in Reihe {{ row }} gefunden.</target>
             </trans-unit>
         </body>
     </file>

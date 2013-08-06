@@ -2,13 +2,13 @@
 
 namespace Toa\Component\Validator\Constraints;
 
-use Symfony\Component\Validator\Exception\ValidatorException;
-
 use Goodby\CSV\Import\Standard\Interpreter;
 use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\LexerConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Toa\Component\Validator\Exception\StopException;
 
 /**
  * CsvFileValidator
@@ -22,13 +22,13 @@ class CsvFileValidator extends FileValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        $violations = count($this->context->getViolations());
+
         parent::validate($value, $constraint);
 
-        if ($this->context->getViolations()->count() > 0) {
-            return;
-        }
+        $failed = count($this->context->getViolations()) !== $violations;
 
-        if (null === $value || '' === $value) {
+        if ($failed || null === $value || '' === $value) {
             return;
         }
 
@@ -53,26 +53,65 @@ class CsvFileValidator extends FileValidator
         $interpreter->addObserver(
             function (array $row) use ($context, $constraint, &$rowCounter) {
                 $rowCounter++;
-                if (!is_null($constraint->maxRowSize) && $rowCounter > $constraint->maxRowSize) {
-                    throw new ValidatorException(
-                        $constraint->maxRowSizeMessage,
-                        $constraint->maxRowSize
-                    );
+
+                if ($constraint->maxRowSize) {
+                    if (!ctype_digit((string) $constraint->maxRowSize)) {
+                        throw new ConstraintDefinitionException(
+                            sprintf(
+                                '"%s" is not a valid row size',
+                                $constraint->maxRowSize
+                            )
+                        );
+                    }
+
+                    if ($rowCounter > $constraint->maxRowSize) {
+                        $context->addViolation(
+                            $constraint->maxRowSizeMessage,
+                            array(
+                                '{{ value }}' => $constraint->maxRowSize,
+                            )
+                        );
+
+                        throw new StopException();
+                    }
                 }
 
                 $rowstr = implode('', $row);
 
                 if (empty($rowstr) && !$constraint->ignoreEmptyLines) {
-                    throw new ValidatorException(
-                        $constraint->emptyLineMessage
+                    $context->addViolation(
+                        $constraint->emptyLineMessage,
+                        array(
+                            '{{ row }}' => $rowCounter,
+                        )
                     );
+
+                    throw new StopException();
                 }
 
-                if (!is_null($constraint->columnSize) && !empty($rowstr) && $constraint->columnSize != count($row)) {
-                    throw new ValidatorException(
-                        $constraint->wrongColumnSizeMessage,
-                        $constraint->columnSize
-                    );
+                if (!empty($rowstr)) {
+                    if ($constraint->columnSize) {
+                        if (!ctype_digit((string) $constraint->columnSize)) {
+                            throw new ConstraintDefinitionException(
+                                sprintf(
+                                    '"%s" is not a valid column size',
+                                    $constraint->columnSize
+                                )
+                            );
+                        }
+
+                        if (count($row) != $constraint->columnSize) {
+                            $context->addViolation(
+                                $constraint->wrongColumnSizeMessage,
+                                array(
+                                    '{{ columnSize }}' => $constraint->columnSize,
+                                    '{{ count }}' => count($row)
+                                )
+                            );
+
+                            throw new StopException();
+                        }
+                    }
                 }
             }
         );
@@ -81,11 +120,10 @@ class CsvFileValidator extends FileValidator
 
         try {
             $lexer->parse($path, $interpreter);
-        } catch (ValidatorException $e) {
-            $this->context->addViolation(
-                $e->getMessage(),
-                array('{{ value }}' => $e->getCode())
-            );
+        } catch (\Exception $e) {
+            if (false === $e instanceof StopException) {
+                throw $e;
+            }
 
             return;
         }
