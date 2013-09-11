@@ -7,14 +7,9 @@ php:
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y ffmpeg
-  - composer self-update
-  - composer install --dev --no-interaction
-  - composer require "symfony/http-foundation":"~2.1"
-  - composer require "satooshi/php-coveralls":"dev-master"
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
+  - php composer.phar require "symfony/http-foundation":"~2.1"
 
 script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
-
-after_script:
-  - php vendor/bin/coveralls -v
+  - php vendor/phpunit/phpunit/phpunit.php -c phpunit.xml.dist
