@@ -8,5 +8,13 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install -y ffmpeg
   - composer self-update
-  - composer install --dev --prefer-source
+  - composer install --dev --no-interaction
   - composer require "symfony/http-foundation":"~2.1"
+  - composer require "satooshi/php-coveralls":"dev-master"
+
+script:
+  - mkdir -p build/logs
+  - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
