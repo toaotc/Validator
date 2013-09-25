@@ -21,6 +21,7 @@
 		"goodby/csv" : "~1.0"
 	},
 	"require-dev" : {
+		"symfony/http-foundation" : "~2.1",
 		"phpunit/phpunit" : "~3.7"
 	},
 	"autoload" : {

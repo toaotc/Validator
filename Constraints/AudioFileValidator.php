@@ -2,12 +2,11 @@
 
 namespace Toa\Component\Validator\Constraints;
 
-use Alchemy\BinaryDriver\Exception\ExecutionFailureException;
-use FFMpeg\FFMpeg;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Toa\Component\Validator\Provider\AudioProviderInterface;
 
 /**
  * Class AudioFileValidator
@@ -16,11 +15,10 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
  */
 class AudioFileValidator extends FileValidator
 {
-    /** @var FFMpeg\FFMpeg $ffmpeg */
-    protected $ffmpeg;
+    const PROVIDER_CLASS = 'Toa\Component\Validator\Provider\FFMpegProvider';
 
-    /** @var FFMpeg\Media\AbstractStreamableMedia $media */
-    protected $media;
+    /** @var AudioProviderInterface */
+    protected $provider;
 
     /**
      * {@inheritdoc}
@@ -29,8 +27,18 @@ class AudioFileValidator extends FileValidator
     {
         parent::initialize($context);
 
-        $this->ffmpeg = FFMpeg::create();
+        $class = self::PROVIDER_CLASS;
+        $this->setProvider(new $class());
     }
+
+    /**
+     * @param AudioProviderInterface $provider
+     */
+    protected function setProvider(AudioProviderInterface $provider)
+    {
+        $this->provider = $provider;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -46,9 +54,9 @@ class AudioFileValidator extends FileValidator
             return;
         }
 
-        $this->media = $this->ffmpeg->open($value);
+        $this->provider->initialize($value);
 
-        $duration = $this->media->getStreams()->first()->get('duration');
+        $duration = $this->provider->getDuration();
 
         if ($constraint->maxDuration) {
             if (!ctype_digit((string) $constraint->maxDuration)) {

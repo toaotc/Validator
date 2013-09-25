@@ -4,8 +4,6 @@ namespace Toa\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
-use FFMpeg\Exception\InvalidArgumentException;
-use FFMpeg\FFMpeg;
 
 /**
  * Class VideoFileValidator
@@ -29,8 +27,7 @@ class VideoFileValidator extends AudioFileValidator
             return;
         }
 
-        $height = $this->media->getStreams()->first()->get('height');
-        $width = $this->media->getStreams()->first()->get('width');
+        $height = $this->provider->getHeight();
 
         if ($constraint->maxHeight) {
             if (!ctype_digit((string) $constraint->maxHeight)) {
@@ -77,6 +74,8 @@ class VideoFileValidator extends AudioFileValidator
                 return;
             }
         }
+
+        $width = $this->provider->getWidth();
 
         if ($constraint->maxWidth) {
             if (!ctype_digit((string) $constraint->maxWidth)) {
