@@ -12,52 +12,54 @@ use FFMpeg\FFMpeg;
 class FFMpegProvider implements VideoProviderInterface
 {
     /** @var FFMpeg\FFMpeg */
-    private static $ffmpeg;
+    private $ffmpeg;
 
-    /** @var FFMpeg\FFProbe\DataMapping\Stream */
-    private $stream;
+    /** @var FFMpeg\FFProbe\DataMapping\Stream[] */
+    private $streams = array();
 
     /**
-     * constructor
+     * @param array $options
      */
-    public function __construct()
+    public function __construct($options = array())
     {
-        if (null === self::$ffmpeg) {
-            self::$ffmpeg = FFMpeg::create();
-        }
+        $this->ffmpeg = FFMpeg::create($options);
     }
 
     /**
      * @param string $pathfile
+     *
+     * @return \FFMpeg\FFProbe\DataMapping\Stream
      */
-    public function initialize($pathfile)
+    protected function getStream($pathfile)
     {
-        $media = self::$ffmpeg->open($pathfile);
+        if (!isset($this->streams[$pathfile])) {
+            $this->streams[$pathfile] = $this->ffmpeg->open($pathfile)->getStreams()->first();
+        }
 
-        $this->stream = $media->getStreams()->first();
+        return $this->streams[$pathfile];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDuration()
+    public function getDuration($value)
     {
-        return $this->stream->get('duration');
+        return $this->getStream($value)->get('duration');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHeight()
+    public function getHeight($value)
     {
-        return $this->stream->get('height');
+        return $this->getStream($value)->get('height');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getWidth()
+    public function getWidth($value)
     {
-        return $this->stream->get('width');
+        return $this->getStream($value)->get('width');
     }
 }

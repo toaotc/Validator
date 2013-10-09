@@ -5,13 +5,13 @@ namespace Toa\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\File;
 
 /**
- * AudioFile
+ * Audio
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  *
  * @Annotation
  */
-class AudioFile extends File
+class Audio extends File
 {
     public $mimeTypes = array(
         'audio/aac',

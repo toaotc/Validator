@@ -4,37 +4,23 @@ namespace Toa\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
-use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Toa\Component\Validator\Provider\AudioProviderInterface;
 
 /**
- * Class AudioFileValidator
+ * Class AudioValidator
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class AudioFileValidator extends FileValidator
+class AudioValidator extends FileValidator
 {
-    const PROVIDER_CLASS = 'Toa\Component\Validator\Provider\FFMpegProvider';
-
-    /** @var AudioProviderInterface */
+    /** @var ProviderInterface */
     protected $provider;
 
     /**
      * {@inheritdoc}
      */
-    public function initialize(ExecutionContextInterface $context)
-    {
-        parent::initialize($context);
-
-        $class = self::PROVIDER_CLASS;
-        $this->setProvider(new $class());
-    }
-
-    /**
-     * @param AudioProviderInterface $provider
-     */
-    protected function setProvider(AudioProviderInterface $provider)
+    public function __construct(AudioProviderInterface $provider)
     {
         $this->provider = $provider;
     }
@@ -54,9 +40,9 @@ class AudioFileValidator extends FileValidator
             return;
         }
 
-        $this->provider->initialize($value);
+        $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
-        $duration = $this->provider->getDuration();
+        $duration = $this->provider->getDuration($path);
 
         if ($constraint->maxDuration) {
             if (!ctype_digit((string) $constraint->maxDuration)) {

@@ -10,7 +10,7 @@ namespace Toa\Component\Validator\Provider;
 interface ProviderInterface
 {
     /**
-     * @param mixed $value
+     * @param mixed $options
      */
-    public function initialize($value);
+    public function __construct($options = null);
 }

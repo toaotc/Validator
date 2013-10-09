@@ -2,7 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <!-- AudioFile -->
+            <!-- Audio -->
             <trans-unit id="100">
                 <source>This file is not a valid audio.</source>
                 <target>Diese Datei ist kein gültiges Audio.</target>
@@ -20,7 +20,7 @@
                 <target>Das Audio ist zu kurz ({{ duration }} Sekunden). Die erforderliche Mindestlänge ist {{ min_duration }} Sekunden.</target>
             </trans-unit>
             
-            <!-- VideoFile -->
+            <!-- Video -->
             <trans-unit id="200">
                 <source>This file is not a valid video.</source>
                 <target>Diese Datei ist kein gültiges Video.</target>

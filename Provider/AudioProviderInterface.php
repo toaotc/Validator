@@ -10,7 +10,9 @@ namespace Toa\Component\Validator\Provider;
 interface AudioProviderInterface extends ProviderInterface
 {
     /**
+     * @param mixed $value
+     *
      * @return float
      */
-    public function getDuration();
+    public function getDuration($value);
 }

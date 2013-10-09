@@ -3,13 +3,13 @@
 namespace Toa\Component\Validator\Constraints;
 
 /**
- * VideoFile
+ * Video
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  *
  * @Annotation
  */
-class VideoFile extends AudioFile
+class Video extends Audio
 {
     public $mimeTypes = array(
         'video/mp4',

@@ -4,14 +4,23 @@ namespace Toa\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Toa\Component\Validator\Provider\VideoProviderInterface;
 
 /**
- * Class VideoFileValidator
+ * Class VideoValidator
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class VideoFileValidator extends AudioFileValidator
+class VideoValidator extends AudioValidator
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(VideoProviderInterface $provider)
+    {
+        parent::__construct($provider);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -27,7 +36,9 @@ class VideoFileValidator extends AudioFileValidator
             return;
         }
 
-        $height = $this->provider->getHeight();
+        $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
+
+        $height = $this->provider->getHeight($path);
 
         if ($constraint->maxHeight) {
             if (!ctype_digit((string) $constraint->maxHeight)) {
@@ -75,7 +86,7 @@ class VideoFileValidator extends AudioFileValidator
             }
         }
 
-        $width = $this->provider->getWidth();
+        $width = $this->provider->getWidth($path);
 
         if ($constraint->maxWidth) {
             if (!ctype_digit((string) $constraint->maxWidth)) {
