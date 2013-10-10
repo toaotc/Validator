@@ -18,7 +18,7 @@ class AudioValidator extends FileValidator
     protected $provider;
 
     /**
-     * {@inheritdoc}
+     * @param AudioProviderInterface $provider
      */
     public function __construct(AudioProviderInterface $provider)
     {

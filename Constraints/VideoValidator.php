@@ -14,7 +14,7 @@ use Toa\Component\Validator\Provider\VideoProviderInterface;
 class VideoValidator extends AudioValidator
 {
     /**
-     * {@inheritdoc}
+     * @param VideoProviderInterface $provider
      */
     public function __construct(VideoProviderInterface $provider)
     {
