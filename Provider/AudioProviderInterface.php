@@ -10,7 +10,7 @@ namespace Toa\Component\Validator\Provider;
 interface AudioProviderInterface extends ProviderInterface
 {
     /**
-     * @param mixed $value
+     * @param string $value
      *
      * @return float
      */

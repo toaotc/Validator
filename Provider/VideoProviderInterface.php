@@ -10,14 +10,14 @@ namespace Toa\Component\Validator\Provider;
 interface VideoProviderInterface extends AudioProviderInterface
 {
     /**
-     * @param mixed $value
+     * @param string $value
      *
      * @return integer
      */
     public function getHeight($value);
 
     /**
-     * @param mixed $value
+     * @param string $value
      *
      * @return integer
      */
