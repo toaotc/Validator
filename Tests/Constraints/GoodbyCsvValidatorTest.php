@@ -253,7 +253,7 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
      */
-    public function testInvalidDelimiterLength()
+    public function testInvalidDelimiter()
     {
         $constraint = new Csv(
             array(
@@ -263,24 +263,11 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->csv, $constraint);
     }
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
-     */
-    public function testInvalidDelimiterType()
-    {
-        $constraint = new Csv(
-            array(
-                'delimiter' => array(),
-            )
-        );
-
-        $this->validator->validate($this->csv, $constraint);
-    }
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
      */
-    public function testInvalidEnclosureLength()
+    public function testInvalidEnclosure()
     {
         $constraint = new Csv(
             array(
@@ -290,41 +277,15 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->csv, $constraint);
     }
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
-     */
-    public function testInvalidEnclosureType()
-    {
-        $constraint = new Csv(
-            array(
-                'enclosure' => array(),
-            )
-        );
-
-        $this->validator->validate($this->csv, $constraint);
-    }
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
      */
-    public function testInvalidEscapeLength()
+    public function testInvalidEscape()
     {
         $constraint = new Csv(
             array(
                 'escape' => '1abc',
-            )
-        );
-
-        $this->validator->validate($this->csv, $constraint);
-    }
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
-     */
-    public function testInvalidEscapeType()
-    {
-        $constraint = new Csv(
-            array(
-                'escape' => array(),
             )
         );
 

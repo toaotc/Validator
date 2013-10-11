@@ -43,14 +43,12 @@ class CsvValidator extends FileValidator
         $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
         foreach (array('delimiter', 'enclosure', 'escape') as $option) {
-            if (!is_scalar($constraint->$option) || strlen($constraint->$option) > 2) {
-                $optionString = is_scalar($constraint->$option) ? $constraint->$option : 'array|object|resource';
+            if (strlen($constraint->$option) > 2) {
 
                 throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid %s',
-                        is_scalar($constraint->$option) ? $constraint->$option : 'array|object|resource',
-                        $optionString,
+                        $constraint->$option,
                         $option
                     )
                 );
