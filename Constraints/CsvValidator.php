@@ -42,17 +42,9 @@ class CsvValidator extends FileValidator
 
         $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
-        foreach (array('delimiter', 'enclosure', 'escape') as $option) {
-            if (strlen($constraint->$option) > 2) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid %s',
-                        $constraint->$option,
-                        $option
-                    )
-                );
-            }
-        }
+        $this->validateDelimiter($constraint);
+        $this->validateEnclosure($constraint);
+        $this->validateEscape($constraint);
 
         $config = array(
             'delimiter' => $constraint->delimiter,
@@ -78,6 +70,42 @@ class CsvValidator extends FileValidator
 
         if ($this->validateMinColumns($columnsSizes, $constraint)) {
             return;
+        }
+    }
+
+    /**
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     */
+    protected function validateDelimiter(Constraint $constraint)
+    {
+        if (strlen($constraint->delimiter) > 2) {
+            throw new ConstraintDefinitionException(sprintf('"%s" is not a valid delimiter', $constraint->delimiter));
+        }
+    }
+
+    /**
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     */
+    protected function validateEnclosure(Constraint $constraint)
+    {
+        if (strlen($constraint->enclosure) > 2) {
+            throw new ConstraintDefinitionException(sprintf('"%s" is not a valid enclosure', $constraint->enclosure));
+        }
+    }
+
+    /**
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     */
+    protected function validateEscape(Constraint $constraint)
+    {
+        if (strlen($constraint->escape) > 2) {
+            throw new ConstraintDefinitionException(sprintf('"%s" is not a valid escape', $constraint->escape));
         }
     }
 

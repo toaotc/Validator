@@ -44,6 +44,24 @@ class AudioValidator extends FileValidator
 
         $duration = $this->provider->getDuration($path);
 
+        if ($this->validateMaxDuration($duration, $constraint)) {
+            return;
+        }
+
+        if ($this->validateMinDuration($duration, $constraint)) {
+            return;
+        }
+    }
+
+    /**
+     * @param float      $duration
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMaxDuration($duration, Constraint $constraint)
+    {
         if ($constraint->maxDuration) {
             if (!ctype_digit((string) $constraint->maxDuration)) {
                 throw new ConstraintDefinitionException(
@@ -63,10 +81,20 @@ class AudioValidator extends FileValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
+    }
 
+    /**
+     * @param float      $duration
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMinDuration($duration, Constraint $constraint)
+    {
         if ($constraint->minDuration) {
             if (!ctype_digit((string) $constraint->minDuration)) {
                 throw new ConstraintDefinitionException(
@@ -86,7 +114,7 @@ class AudioValidator extends FileValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
     }

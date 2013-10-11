@@ -40,6 +40,34 @@ class VideoValidator extends AudioValidator
 
         $height = $this->provider->getHeight($path);
 
+        if ($this->validateMaxHeight($height, $constraint)) {
+            return;
+        }
+
+        if ($this->validateMinHeight($height, $constraint)) {
+            return;
+        }
+
+        $width = $this->provider->getWidth($path);
+
+        if ($this->validateMaxWidth($width, $constraint)) {
+            return;
+        }
+
+        if ($this->validateMinWidth($width, $constraint)) {
+            return;
+        }
+    }
+
+    /**
+     * @param integer    $height
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMaxHeight($height, Constraint $constraint)
+    {
         if ($constraint->maxHeight) {
             if (!ctype_digit((string) $constraint->maxHeight)) {
                 throw new ConstraintDefinitionException(
@@ -59,10 +87,20 @@ class VideoValidator extends AudioValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
+    }
 
+    /**
+     * @param integer    $height
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMinHeight($height, Constraint $constraint)
+    {
         if ($constraint->minHeight) {
             if (!ctype_digit((string) $constraint->minHeight)) {
                 throw new ConstraintDefinitionException(
@@ -82,12 +120,21 @@ class VideoValidator extends AudioValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
 
-        $width = $this->provider->getWidth($path);
+    }
 
+    /**
+     * @param integer    $width
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMaxWidth($width, Constraint $constraint)
+    {
         if ($constraint->maxWidth) {
             if (!ctype_digit((string) $constraint->maxWidth)) {
                 throw new ConstraintDefinitionException(
@@ -107,10 +154,20 @@ class VideoValidator extends AudioValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
+    }
 
+    /**
+     * @param integer    $width
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMinWidth($width, Constraint $constraint)
+    {
         if ($constraint->minWidth) {
             if (!ctype_digit((string) $constraint->minWidth)) {
                 throw new ConstraintDefinitionException(
@@ -130,7 +187,7 @@ class VideoValidator extends AudioValidator
                     )
                 );
 
-                return;
+                return true;
             }
         }
     }
