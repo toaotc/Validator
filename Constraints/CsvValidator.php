@@ -46,7 +46,7 @@ class CsvValidator extends FileValidator
             throw new ConstraintDefinitionException(
                 sprintf(
                     '"%s" is not a valid delimiter',
-                    $constraint->delimiter
+                    (string) $constraint->delimiter
                 )
             );
         }
@@ -55,7 +55,7 @@ class CsvValidator extends FileValidator
             throw new ConstraintDefinitionException(
                 sprintf(
                     '"%s" is not a valid enclosure',
-                    $constraint->enclosure
+                    (string) $constraint->enclosure
                 )
             );
         }
@@ -64,7 +64,7 @@ class CsvValidator extends FileValidator
             throw new ConstraintDefinitionException(
                 sprintf(
                     '"%s" is not a valid escape',
-                    $constraint->escape
+                    (string) $constraint->escape
                 )
             );
         }
