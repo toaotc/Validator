@@ -62,52 +62,34 @@ class CsvValidator extends FileValidator
 
         $rows = $this->provider->countRows($path, $config);
 
-        if (null !== $constraint->maxRows) {
-            if (!ctype_digit((string) $constraint->maxRows)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid row size',
-                        $constraint->maxRows
-                    )
-                );
-            }
-
-            if ($rows > $constraint->maxRows) {
-                $this->context->addViolation(
-                    $constraint->maxRowsMessage,
-                    array(
-                        '{{ max_rows }}' => $constraint->maxRows,
-                    )
-                );
-
-                return;
-            }
+        if ($this->validateMaxRows($rows, $constraint)) {
+            return;
         }
 
-        if (null !== $constraint->minRows) {
-            if (!ctype_digit((string) $constraint->minRows)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid row size',
-                        $constraint->minRows
-                    )
-                );
-            }
-
-            if ($rows < $constraint->minRows) {
-                $this->context->addViolation(
-                    $constraint->minRowsMessage,
-                    array(
-                        '{{ min_rows }}' => $constraint->minRows,
-                    )
-                );
-
-                return;
-            }
+        if ($this->validateMinRows($rows, $constraint)) {
+            return;
         }
 
         $columnsSizes = $this->provider->collectColumnSizes($path, $config);
 
+        if ($this->validateMaxColumns($columnsSizes, $constraint)) {
+            return;
+        }
+
+        if ($this->validateMinColumns($columnsSizes, $constraint)) {
+            return;
+        }
+    }
+
+    /**
+     * @param array      $columnsSizes
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMaxColumns($columnsSizes, Constraint $constraint)
+    {
         if (null !== $constraint->maxColumns) {
             if (!ctype_digit((string) $constraint->maxColumns)) {
                 throw new ConstraintDefinitionException(
@@ -128,11 +110,21 @@ class CsvValidator extends FileValidator
                         )
                     );
 
-                    return;
+                    return true;
                 }
             }
         }
+    }
 
+    /**
+     * @param array      $columnsSizes
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMinColumns($columnsSizes, Constraint $constraint)
+    {
         if (null !== $constraint->minColumns) {
             if (!ctype_digit((string) $constraint->minColumns)) {
                 throw new ConstraintDefinitionException(
@@ -153,8 +145,72 @@ class CsvValidator extends FileValidator
                         )
                     );
 
-                    return;
+                    return true;
                 }
+            }
+        }
+    }
+
+    /**
+     * @param integer    $rows
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateMaxRows($rows, Constraint $constraint)
+    {
+        if (null !== $constraint->maxRows) {
+            if (!ctype_digit((string) $constraint->maxRows)) {
+                throw new ConstraintDefinitionException(
+                    sprintf(
+                        '"%s" is not a valid row size',
+                        $constraint->maxRows
+                    )
+                );
+            }
+
+            if ($rows > $constraint->maxRows) {
+                $this->context->addViolation(
+                    $constraint->maxRowsMessage,
+                    array(
+                        '{{ max_rows }}' => $constraint->maxRows,
+                    )
+                );
+
+                return true;
+            }
+        }
+    }
+
+    /**
+     * @param integer    $rows
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateminRows($rows, Constraint $constraint)
+    {
+        if (null !== $constraint->minRows) {
+            if (!ctype_digit((string) $constraint->minRows)) {
+                throw new ConstraintDefinitionException(
+                    sprintf(
+                        '"%s" is not a valid row size',
+                        $constraint->minRows
+                    )
+                );
+            }
+
+            if ($rows < $constraint->minRows) {
+                $this->context->addViolation(
+                    $constraint->minRowsMessage,
+                    array(
+                        '{{ min_rows }}' => $constraint->minRows,
+                    )
+                );
+
+                return true;
             }
         }
     }
