@@ -36,7 +36,7 @@ class GoodbyCsvProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function testCollectColumnIsValid()
+    public function testcollectColumnSizesIsValid()
     {
         $columnSizes = $this->provider->collectColumnSizes($this->csv);
 
