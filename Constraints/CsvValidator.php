@@ -42,31 +42,16 @@ class CsvValidator extends FileValidator
 
         $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
-        if (!is_scalar($constraint->delimiter) || strlen($constraint->delimiter) > 2) {
-            throw new ConstraintDefinitionException(
-                sprintf(
-                    '"%s" is not a valid delimiter',
-                    is_scalar($constraint->delimiter) ? $constraint->delimiter : gettype($constraint->delimiter)
-                )
-            );
-        }
-
-        if (!is_scalar($constraint->enclosure) || strlen($constraint->enclosure) > 2) {
-            throw new ConstraintDefinitionException(
-                sprintf(
-                    '"%s" is not a valid enclosure',
-                    is_scalar($constraint->enclosure) ? $constraint->enclosure : gettype($constraint->enclosure)
-                )
-            );
-        }
-
-        if (!is_scalar($constraint->escape) || strlen($constraint->escape) > 2) {
-            throw new ConstraintDefinitionException(
-                sprintf(
-                    '"%s" is not a valid escape',
-                    is_scalar($constraint->escape) ? $constraint->escape : gettype($constraint->escape)
-                )
-            );
+        foreach (array('delimiter', 'enclosure', 'escape') as $option) {
+            if (!is_scalar($constraint->$option) || strlen($constraint->$option) > 2) {
+                throw new ConstraintDefinitionException(
+                    sprintf(
+                        '"%s" is not a valid %s',
+                        is_scalar($constraint->delimiter) ? $constraint->delimiter : '?',
+                        $option
+                    )
+                );
+            }
         }
 
         $config = array(
