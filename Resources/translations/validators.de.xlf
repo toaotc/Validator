@@ -56,16 +56,20 @@
             
             <!-- CsvFile -->
             <trans-unit id="300">
-                <source>Each line should contain exactly {{ value }} columns.</source>
-                <target>Jede Zeile sollte exakt {{ value }} Spalten enthalten.</target>
+                <source>Each line should contain max. {{ max_columns }} columns.</source>
+                <target>Jede Zeile sollte max. {{ max_columns }} Spalten enthalten.</target>
             </trans-unit>
             <trans-unit id="301">
-                <source>File should contain max. {{ value }} rows.</source>
-                <target>Die Datei sollte max. {{ value }} Zeilen enthalten.</target>
+                <source>Each line should contain min. {{ min_columns }} columns.</source>
+                <target>Jede Zeile sollte min. {{ min_columns }} Spalten enthalten.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>Found empty line at {{ row }}.</source>
-                <target>Eine leere Zeile wurde in Reihe {{ row }} gefunden.</target>
+                <source>File should contain max. {{ max_rows }} rows.</source>
+                <target>Die Datei sollte max. {{ max_rows }} Zeilen enthalten.</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>File should contain min. {{ min_rows }} rows.</source>
+                <target>Die Datei sollte min. {{ min_rows }} Zeilen enthalten.</target>
             </trans-unit>
         </body>
     </file>

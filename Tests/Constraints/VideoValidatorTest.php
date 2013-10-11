@@ -6,7 +6,7 @@ use Toa\Component\Validator\Constraints\Video;
 use Toa\Component\Validator\Constraints\VideoValidator;
 
 /**
- * Class VideoValidatorTest
+ * VideoValidatorTest
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */

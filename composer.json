@@ -15,14 +15,14 @@
 		"MIT"
 	],
 	"require" : {
-		"symfony/validator" : "~2.1",
-		"php-ffmpeg/php-ffmpeg" : "~0.3",
-		"php" : ">=5.3.3",
-		"goodby/csv" : "~1.0"
+		"symfony/validator" : "~2.1"
 	},
 	"require-dev" : {
-		"symfony/http-foundation" : "~2.1",
-		"phpunit/phpunit" : "~3.7"
+		"symfony/http-foundation" : "~2.1"
+	},
+	"suggest": {
+		"goodby/csv" : "",
+		"php-ffmpeg/php-ffmpeg" : ""
 	},
 	"autoload" : {
 		"psr-0" : {
@@ -30,8 +30,5 @@
 		}
 	},
 	"target-dir" : "Toa/Component/Validator",
-	"minimum-stability" : "dev",
-	"suggest" : {
-		"symfony/config" : "infrastructure for loading configurations from different data sources"
-	}
+	"minimum-stability" : "dev"
 }

@@ -56,16 +56,20 @@
             
             <!-- CsvFile -->
             <trans-unit id="300">
-                <source>Each line should contain exactly {{ value }} columns.</source>
-                <target>Each line should contain exactly {{ value }} columns.</target>
+                <source>Each line should contain max. {{ max_columns }} columns.</source>
+                <target>Each line should contain max. {{ max_columns }} columns.</target>
             </trans-unit>
             <trans-unit id="301">
-                <source>File should contain max. {{ value }} rows.</source>
-                <target>File should contain max. {{ value }} rows.</target>
+                <source>Each line should contain min. {{ min_columns }} columns.</source>
+                <target>Each line should contain min. {{ min_columns }} columns.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>Found empty line at {{ row }}.</source>
-                <target>Found empty line at {{ row }}.</target>
+                <source>File should contain max. {{ max_rows }} rows.</source>
+                <target>File should contain max. {{ max_rows }} rows.</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>File should contain min. {{ min_rows }} rows.</source>
+                <target>File should contain min. {{ min_rows }} rows.</target>
             </trans-unit>
         </body>
     </file>

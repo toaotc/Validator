@@ -6,7 +6,7 @@ use Toa\Component\Validator\Constraints\Audio;
 use Toa\Component\Validator\Constraints\AudioValidator;
 
 /**
- * Class AudioValidatorTest
+ * AudioValidatorTest
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */

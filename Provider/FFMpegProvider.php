@@ -9,7 +9,7 @@ use FFMpeg\FFMpeg;
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class FFMpegProvider implements VideoProviderInterface
+class FFMpegProvider extends AbstractProvider implements VideoProviderInterface
 {
     /** @var FFMpeg\FFMpeg */
     private $ffmpeg;
