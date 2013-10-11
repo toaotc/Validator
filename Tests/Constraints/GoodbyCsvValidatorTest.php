@@ -73,15 +73,7 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
         $this->context->expects($this->never())
             ->method('addViolation');
 
-        $constraint = new Csv(
-            array(
-                'delimiter' => ',',
-                'enclosure' => '"',
-                'escape' => '\\',
-            )
-        );
-
-        $this->validator->validate($this->csv, new $constraint);
+        $this->validator->validate($this->csv, new Csv());
     }
 
     /**
