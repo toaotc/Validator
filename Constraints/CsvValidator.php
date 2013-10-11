@@ -44,7 +44,6 @@ class CsvValidator extends FileValidator
 
         foreach (array('delimiter', 'enclosure', 'escape') as $option) {
             if (strlen($constraint->$option) > 2) {
-
                 throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid %s',
@@ -63,7 +62,7 @@ class CsvValidator extends FileValidator
 
         $rows = $this->provider->countRows($path, $config);
 
-        if ($constraint->maxRows) {
+        if (null !== $constraint->maxRows) {
             if (!ctype_digit((string) $constraint->maxRows)) {
                 throw new ConstraintDefinitionException(
                     sprintf(
@@ -80,10 +79,12 @@ class CsvValidator extends FileValidator
                         '{{ max_rows }}' => $constraint->maxRows,
                     )
                 );
+
+                return;
             }
         }
 
-        if ($constraint->minRows) {
+        if (null !== $constraint->minRows) {
             if (!ctype_digit((string) $constraint->minRows)) {
                 throw new ConstraintDefinitionException(
                     sprintf(
@@ -100,12 +101,14 @@ class CsvValidator extends FileValidator
                         '{{ min_rows }}' => $constraint->minRows,
                     )
                 );
+
+                return;
             }
         }
 
         $columnsSizes = $this->provider->collectColumnSizes($path, $config);
 
-        if ($constraint->maxColumns) {
+        if (null !== $constraint->maxColumns) {
             if (!ctype_digit((string) $constraint->maxColumns)) {
                 throw new ConstraintDefinitionException(
                     sprintf(
@@ -125,12 +128,12 @@ class CsvValidator extends FileValidator
                         )
                     );
 
-                    break;
+                    return;
                 }
             }
         }
 
-        if ($constraint->minColumns) {
+        if (null !== $constraint->minColumns) {
             if (!ctype_digit((string) $constraint->minColumns)) {
                 throw new ConstraintDefinitionException(
                     sprintf(
@@ -150,7 +153,7 @@ class CsvValidator extends FileValidator
                         )
                     );
 
-                    break;
+                    return;
                 }
             }
         }
