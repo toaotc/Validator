@@ -67,12 +67,17 @@ class GoodbyCsvProvider implements CsvProviderInterface
         $interpreter->addObserver(
             function (array $row) use (&$rowCounter, &$columnSizes) {
                 $rowCounter ++;
+                $rowLength = count($row);
 
-                if (!isset($columnSizes[count($row)])) {
-                    $columnSizes[count($row)] = array();
+                if ($rowLength == 1 && empty($row[0])) {
+                    $rowLength = 0;
                 }
 
-                $columnSizes[count($row)][] = $rowCounter;
+                if (!isset($columnSizes[$rowLength])) {
+                    $columnSizes[$rowLength] = array();
+                }
+
+                $columnSizes[$rowLength][] = $rowCounter;
             }
         );
 

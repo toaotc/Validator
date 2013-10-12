@@ -45,7 +45,7 @@ class GoodbyCsvProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $columnSizes);
         $this->assertArrayHasKey(3, $columnSizes);
         $this->assertEquals(array(1, 2, 4), $columnSizes[3]);
-        $this->assertArrayHasKey(1, $columnSizes);
-        $this->assertEquals(array(3), $columnSizes[1]);
+        $this->assertArrayHasKey(0, $columnSizes);
+        $this->assertEquals(array(3), $columnSizes[0]);
     }
 }

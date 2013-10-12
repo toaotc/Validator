@@ -64,6 +64,10 @@ class CsvValidator extends FileValidator
 
         $columnsSizes = $this->provider->collectColumnSizes($path, $config);
 
+        if ($this->validateEmptyColumns($columnsSizes, $constraint)) {
+            return;
+        }
+
         if ($this->validateMaxColumns($columnsSizes, $constraint)) {
             return;
         }
@@ -106,6 +110,29 @@ class CsvValidator extends FileValidator
     {
         if (strlen($constraint->escape) > 2) {
             throw new ConstraintDefinitionException(sprintf('"%s" is not a valid escape', $constraint->escape));
+        }
+    }
+
+    /**
+     * @param array      $columnsSizes
+     * @param Constraint $constraint
+     *
+     * @throws ConstraintDefinitionException
+     * @return boolean
+     */
+    protected function validateEmptyColumns($columnsSizes, Constraint $constraint)
+    {
+        if (!$constraint->ignoreEmptyColumns) {
+            if (isset($columnsSizes[0])) {
+                $this->context->addViolation(
+                    $constraint->emptyColumnsMessage,
+                    array(
+                        '{{ occurrences }}' => implode(',', $columnsSizes[0])
+                    )
+                );
+
+                return true;
+            }
         }
     }
 
@@ -164,7 +191,7 @@ class CsvValidator extends FileValidator
             }
 
             foreach ($columnsSizes as $size => $occurrences) {
-                if ($size < $constraint->minColumns) {
+                if (0 !== $size && $size < $constraint->minColumns) {
                     $this->context->addViolation(
                         $constraint->minColumnsMessage,
                         array(

@@ -71,6 +71,10 @@
                 <source>File should contain min. {{ min_rows }} rows.</source>
                 <target>File should contain min. {{ min_rows }} rows.</target>
             </trans-unit>
+            <trans-unit id="304">
+                <source>Found empty columns.</source>
+                <target>Found empty columns.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

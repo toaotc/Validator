@@ -32,7 +32,7 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue(
                     array(
                         3 => array(1, 2, 4),
-                        0 => array(1),
+                        0 => array(3),
                     )
                 )
             );
@@ -86,7 +86,7 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
 
         $constraint = new Csv(
             array(
-                'minColumns' => 0,
+                'minColumns' => 1,
                 'maxColumns' => 3,
                 'minRows' => 1,
                 'maxRows' => 4,
@@ -188,6 +188,30 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
                 array(
                     '{{ max_columns }}' => '1',
                     '{{ occurrences }}' => '1,2,4',
+                )
+            );
+
+        $this->validator->validate($this->csv, $constraint);
+    }
+
+    /**
+     * @test
+     */
+    public function testEmptyColumns()
+    {
+        $constraint = new Csv(
+            array(
+                'ignoreEmptyColumns' => false,
+                'emptyColumnsMessage' => 'myMessage',
+            )
+        );
+
+        $this->context->expects($this->once())
+            ->method('addViolation')
+            ->with(
+                'myMessage',
+                array(
+                    '{{ occurrences }}' => '3',
                 )
             );
 
