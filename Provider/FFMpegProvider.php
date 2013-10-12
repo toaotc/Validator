@@ -18,11 +18,11 @@ class FFMpegProvider implements VideoProviderInterface
     private $streams = array();
 
     /**
-     * @param array $options
+     * @param FFMpeg $ffmpeg
      */
-    public function __construct($options = array())
+    public function __construct(FFMpeg $ffmpeg)
     {
-        $this->ffmpeg = FFMpeg::create($options);
+        $this->ffmpeg = $ffmpeg;
     }
 
     /**
