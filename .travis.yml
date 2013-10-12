@@ -5,13 +5,11 @@ php:
   - 5.4
   - 5.5
 
-before_script:
-  - sudo apt-get update
-  - sudo apt-get install -y ffmpeg
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev --no-interaction
-  - php composer.phar require --dev "symfony/http-foundation":"*" "phpunit/phpunit":"*" "php-ffmpeg/php-ffmpeg":"*" "goodby/csv":"*"
-  
+env:
+  - SYMFONY_VERSION=2.1.*
+  - SYMFONY_VERSION=2.2.*
+  - SYMFONY_VERSION=2.3.*
+  - SYMFONY_VERSION=dev-master
 
-script:
-  - php vendor/phpunit/phpunit/phpunit.php -c phpunit.xml.dist
+before_script:
+  - composer require symfony/http-foundation:${SYMFONY_VERSION}
