@@ -69,7 +69,7 @@ class GoodbyCsvProvider implements CsvProviderInterface
                 $rowCounter ++;
                 $rowLength = count($row);
 
-                if ($rowLength == 1 && empty($row[0])) {
+                if ($rowLength == 1 && null === $row[0]) {
                     $rowLength = 0;
                 }
 
