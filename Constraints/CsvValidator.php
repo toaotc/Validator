@@ -122,17 +122,15 @@ class CsvValidator extends FileValidator
      */
     protected function validateEmptyColumns($columnsSizes, Constraint $constraint)
     {
-        if (!$constraint->ignoreEmptyColumns) {
-            if (isset($columnsSizes[0])) {
-                $this->context->addViolation(
-                    $constraint->emptyColumnsMessage,
-                    array(
-                        '{{ occurrences }}' => implode(',', $columnsSizes[0])
-                    )
-                );
+        if (!$constraint->ignoreEmptyColumns && isset($columnsSizes[0])) {
+            $this->context->addViolation(
+                $constraint->emptyColumnsMessage,
+                array(
+                    '{{ occurrences }}' => implode(',', $columnsSizes[0])
+                )
+            );
 
-                return true;
-            }
+            return true;
         }
     }
 
