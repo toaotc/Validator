@@ -11,7 +11,7 @@ use Goodby\CSV\Import\Standard\LexerConfig;
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class GoodbyCsvProvider extends AbstractProvider implements CsvProviderInterface
+class GoodbyCsvProvider implements CsvProviderInterface
 {
     /** @var array */
     private $interpretations = array ();

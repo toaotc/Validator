@@ -9,8 +9,4 @@ namespace Toa\Component\Validator\Provider;
  */
 interface ProviderInterface
 {
-    /**
-     * @param mixed $options
-     */
-    public function __construct($options = null);
 }
