@@ -12,8 +12,6 @@ env:
   - SYMFONY_VERSION=dev-master
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install -y ffmpeg
   - composer require --dev symfony/framework-bundle:${SYMFONY_VERSION}
 
 script: phpunit --coverage-text
