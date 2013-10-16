@@ -13,23 +13,38 @@ use Toa\Component\Validator\Constraints\AudioValidator;
 class AudioValidatorTest extends \PHPUnit_Framework_TestCase
 {
     protected $context;
+    protected $provider;
     protected $validator;
     protected $audio;
 
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        $this->context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $providerMock = $this->getMock('Toa\Component\Validator\Provider\AudioProviderInterface');
-        $providerMock
+        $this->provider = $this->getMock('Toa\Component\Validator\Provider\AudioProviderInterface');
+
+        $this->provider
             ->expects($this->any())
             ->method('getDuration')
             ->will($this->returnValue(30.249796));
 
-        $this->validator = new AudioValidator($providerMock);
+        $this->validator = new AudioValidator($this->provider);
         $this->validator->initialize($this->context);
 
         $this->audio = __DIR__.'/Fixtures/silence.mp3';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->context = null;
+        $this->provider = null;
+        $this->validator = null;
+        $this->video = null;
     }
 
     /**
@@ -37,8 +52,8 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testNullIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+        $this->provider->expects($this->never())->method('getDuration');
 
         $this->validator->validate(null, new Audio());
     }
@@ -48,8 +63,8 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStringIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+        $this->provider->expects($this->never())->method('getDuration');
 
         $this->validator->validate('', new Audio());
     }
@@ -59,8 +74,8 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidAudio()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+        $this->provider->expects($this->once())->method('getDuration');
 
         $this->validator->validate($this->audio, new Audio());
     }
@@ -70,8 +85,8 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidDuration()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+        $this->provider->expects($this->once())->method('getDuration');
 
         $constraint = new Audio(
             array(

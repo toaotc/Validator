@@ -13,25 +13,47 @@ use Toa\Component\Validator\Constraints\VideoValidator;
 class VideoValidatorTest extends \PHPUnit_Framework_TestCase
 {
     protected $context;
+    protected $provider;
     protected $validator;
     protected $video;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        $this->context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $providerMock = $this->getMock('Toa\Component\Validator\Provider\VideoProviderInterface');
-        $providerMock
-            ->expects($this->any())
-            ->method('getHeight')->will($this->returnValue(240));
-        $providerMock
-            ->expects($this->any())
-            ->method('getWidth')->will($this->returnValue(480));
+        $this->provider = $this->getMock('Toa\Component\Validator\Provider\VideoProviderInterface');
 
-        $this->validator = new VideoValidator($providerMock);
+        $this->provider
+            ->expects($this->any())
+            ->method('getHeight')
+            ->will($this->returnValue(240));
+
+        $this->provider
+            ->expects($this->any())
+            ->method('getWidth')
+            ->will($this->returnValue(480));
+
+
+        $this->validator = new VideoValidator($this->provider);
         $this->validator->initialize($this->context);
 
         $this->video = __DIR__.'/Fixtures/white.m4v';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->context = null;
+        $this->provider = null;
+        $this->validator = null;
+        $this->video = null;
     }
 
     /**
@@ -39,8 +61,10 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testNullIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->never())->method('getHeight');
+        $this->provider->expects($this->never())->method('getWidth');
 
         $this->validator->validate(null, new Video());
     }
@@ -50,8 +74,10 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStringIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->never())->method('getHeight');
+        $this->provider->expects($this->never())->method('getWidth');
 
         $this->validator->validate('', new Video());
     }
@@ -61,8 +87,10 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidVideo()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->once())->method('getHeight');
+        $this->provider->expects($this->once())->method('getWidth');
 
         $this->validator->validate($this->video, new Video());
     }
@@ -72,8 +100,10 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidSize()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->once())->method('getHeight');
+        $this->provider->expects($this->once())->method('getWidth');
 
         $constraint = new Video(
             array(

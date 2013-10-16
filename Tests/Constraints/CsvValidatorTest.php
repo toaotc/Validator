@@ -6,26 +6,34 @@ use Toa\Component\Validator\Constraints\Csv;
 use Toa\Component\Validator\Constraints\CsvValidator;
 
 /**
- * GoodbyCsvValidatorTest
+ * CsvValidatorTest
  *
  * @author Enrico Thies <enrico.thies@gmail.com>
  */
-class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
+class CsvValidatorTest extends \PHPUnit_Framework_TestCase
 {
     protected $context;
+    protected $provider;
     protected $validator;
     protected $csv;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        $this->context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $providerMock = $this->getMock('Toa\Component\Validator\Provider\CsvProviderInterface');
-        $providerMock
+        $this->provider = $this->getMock('Toa\Component\Validator\Provider\CsvProviderInterface');
+
+        $this->provider
             ->expects($this->any())
             ->method('countRows')
             ->will($this->returnValue(4));
-        $providerMock
+
+        $this->provider
             ->expects($this->any())
             ->method('collectColumnSizes')
             ->will(
@@ -37,10 +45,21 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $this->validator = new CsvValidator($providerMock);
+        $this->validator = new CsvValidator($this->provider);
         $this->validator->initialize($this->context);
 
         $this->csv = __DIR__.'/Fixtures/test.csv';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->context = null;
+        $this->provider = null;
+        $this->validator = null;
+        $this->video = null;
     }
 
     /**
@@ -48,8 +67,10 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testNullIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->never())->method('countRows');
+        $this->provider->expects($this->never())->method('collectColumnSizes');
 
         $this->validator->validate(null, new Csv());
     }
@@ -59,8 +80,10 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStringIsValid()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->never())->method('countRows');
+        $this->provider->expects($this->never())->method('collectColumnSizes');
 
         $this->validator->validate('', new Csv());
     }
@@ -70,8 +93,10 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidCsv()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
+
+        $this->provider->expects($this->once())->method('countRows');
+        $this->provider->expects($this->once())->method('collectColumnSizes');
 
         $this->validator->validate($this->csv, new Csv());
     }
@@ -81,8 +106,7 @@ class GoodbyCsvValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidSize()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
+        $this->context->expects($this->never())->method('addViolation');
 
         $constraint = new Csv(
             array(
