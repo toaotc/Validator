@@ -11,11 +11,7 @@ namespace Toa\Component\Validator\Constraints;
  */
 class Video extends Audio
 {
-    public $mimeTypes = array(
-        'video/mp4',
-        'video/ogg',
-        'video/webm'
-    );
+    public $mimeTypes = "video/*";
 
     public $mimeTypesMessage = 'This file is not a valid video.';
     public $formatNotDetectedMessage = 'The format of the video could not be detected.';

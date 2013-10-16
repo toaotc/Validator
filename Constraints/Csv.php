@@ -13,11 +13,7 @@ use Symfony\Component\Validator\Constraints\File;
  */
 class Csv extends File
 {
-    public $mimeTypes = array(
-        "text/plain",
-        "text/csv",
-        "text/x-c"
-    );
+    public $mimeTypes = "text/*";
 
     public $delimiter = ',';
     public $enclosure = '"';

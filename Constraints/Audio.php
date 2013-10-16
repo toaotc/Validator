@@ -13,14 +13,7 @@ use Symfony\Component\Validator\Constraints\File;
  */
 class Audio extends File
 {
-    public $mimeTypes = array(
-        'audio/aac',
-        'audio/mp4',
-        'audio/mpeg',
-        'audio/ogg',
-        'audio/wav',
-        'audio/webm'
-    );
+    public $mimeTypes = "audio/*";
 
     public $mimeTypesMessage = 'This file is not a valid audio.';
     public $formatNotDetectedMessage = 'The format of the audio could not be detected.';
