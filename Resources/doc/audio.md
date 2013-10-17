@@ -5,6 +5,7 @@ Audio
 
 - [mimeTypes](#mimeTypes)
 - [mimeTypesMessage](#mimeTypesMessage)
+- [formatNotDetectedMessage](#formatNotDetectedMessage)
 - [maxDuration](#maxDuration)
 - [minDuration](#minDuration)
 - [maxDurationMessage](#maxDurationMessage)
@@ -54,6 +55,13 @@ Audio
 
 **type**:    `string`  
 **default**: `This file is not a valid audio.`
+
+#### [formatNotDetectedMessage](id:formatNotDetectedMessage)
+
+**type**:    `string`  
+**default**: `The format of the audio could not be detected.`
+
+The message displayed if the provider could not retrieve validatable data for the file.
 
 #### [maxDuration](id:maxDuration)
 

@@ -5,6 +5,7 @@ Video
 
 - [mimeTypes](#mimeTypes)
 - [mimeTypesMessage](#mimeTypesMessage)
+- [formatNotDetectedMessage](#formatNotDetectedMessage)
 - [maxWidth](#maxWidth)
 - [minWidth](#minWidth)
 - [maxHeight](#maxHeight)
@@ -60,6 +61,11 @@ Video
 
 **type**:    `string`  
 **default**: `This file is not a valid video.`
+
+#### [formatNotDetectedMessage](id:formatNotDetectedMessage)
+
+**type**:    `string`  
+**default**: `The format of the video could not be detected.`
 
 #### [maxWidth](id:maxWidth)
 

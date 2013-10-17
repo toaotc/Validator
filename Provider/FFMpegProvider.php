@@ -3,6 +3,7 @@
 namespace Toa\Component\Validator\Provider;
 
 use FFMpeg\FFMpeg;
+use Toa\Component\Validator\Exception\NotFoundDataException;
 
 /**
  * FFMpegProvider
@@ -33,7 +34,15 @@ class FFMpegProvider implements VideoProviderInterface
     protected function getStream($pathfile)
     {
         if (!isset($this->streams[$pathfile])) {
-            $this->streams[$pathfile] = $this->ffmpeg->open($pathfile)->getStreams()->first();
+            try {
+                $this->streams[$pathfile] = $this->ffmpeg->open($pathfile)->getStreams()->first();
+            } catch (\RuntimeException $e) {
+                throw new NotFoundDataException(
+                    sprintf('Unable to provide data for "%s"', $pathfile),
+                    $e->getCode(),
+                    $e
+                );
+            }
         }
 
         return $this->streams[$pathfile];

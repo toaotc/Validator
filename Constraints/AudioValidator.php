@@ -5,6 +5,7 @@ namespace Toa\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Toa\Component\Validator\Exception\ProviderException;
 use Toa\Component\Validator\Provider\AudioProviderInterface;
 
 /**
@@ -42,7 +43,13 @@ class AudioValidator extends FileValidator
 
         $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
-        $duration = $this->provider->getDuration($path);
+        try {
+            $duration = $this->provider->getDuration($path);
+        } catch (ProviderException $e) {
+            $this->context->addViolation($constraint->formatNotDetectedMessage);
+
+            return;
+        }
 
         if ($this->validateMaxDuration($duration, $constraint)) {
             return;

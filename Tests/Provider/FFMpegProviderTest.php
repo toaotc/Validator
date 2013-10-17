@@ -95,4 +95,19 @@ class FFMpegProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(480, $this->provider->getWidth($this->video));
     }
+
+    /**
+     * @expectedException \Toa\Component\Validator\Exception\ProviderException
+     */
+    public function testRuntimeException()
+    {
+        $this->ffmpeg
+            ->expects($this->once())
+            ->method('open')
+            ->with($this->video)
+            ->will($this->throwException(new \RuntimeException()));
+
+
+        $this->provider->getDuration($this->video);
+    }
 }

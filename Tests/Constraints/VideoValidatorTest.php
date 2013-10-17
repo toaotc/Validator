@@ -4,6 +4,7 @@ namespace Toa\Component\Validator\Tests\Constraints;
 
 use Toa\Component\Validator\Constraints\Video;
 use Toa\Component\Validator\Constraints\VideoValidator;
+use Toa\Component\Validator\Exception\ProviderException;
 
 /**
  * VideoValidatorTest
@@ -93,6 +94,32 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
         $this->provider->expects($this->once())->method('getWidth');
 
         $this->validator->validate($this->video, new Video());
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalidVideo()
+    {
+        $this->context->expects($this->once())
+            ->method('addViolation')
+            ->with(
+                'myMessage'
+            );
+
+        $this->provider
+            ->expects($this->once())
+            ->method('getHeight')
+            ->with($this->video)
+            ->will($this->throwException(new ProviderException()));
+
+        $constraint = new Video(
+            array(
+                'formatNotDetectedMessage' => 'myMessage',
+            )
+        );
+
+        $this->validator->validate($this->video, $constraint);
     }
 
     /**

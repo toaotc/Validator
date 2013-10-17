@@ -4,6 +4,7 @@ namespace Toa\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Toa\Component\Validator\Exception\ProviderException;
 use Toa\Component\Validator\Provider\VideoProviderInterface;
 
 /**
@@ -38,7 +39,13 @@ class VideoValidator extends AudioValidator
 
         $path = $value instanceof \SplFileInfo ? $value->getPathname() : (string) $value;
 
-        $height = $this->provider->getHeight($path);
+        try {
+            $height = $this->provider->getHeight($path);
+        } catch (ProviderException $e) {
+            $this->context->addViolation($constraint->formatNotDetectedMessage);
+
+            return;
+        }
 
         if ($this->validateMaxHeight($height, $constraint)) {
             return;

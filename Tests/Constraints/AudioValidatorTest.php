@@ -4,6 +4,7 @@ namespace Toa\Component\Validator\Tests\Constraints;
 
 use Toa\Component\Validator\Constraints\Audio;
 use Toa\Component\Validator\Constraints\AudioValidator;
+use Toa\Component\Validator\Exception\ProviderException;
 
 /**
  * AudioValidatorTest
@@ -79,6 +80,32 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
         $this->provider->expects($this->once())->method('getDuration');
 
         $this->validator->validate($this->audio, new Audio());
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalidAudio()
+    {
+        $this->context->expects($this->once())
+            ->method('addViolation')
+            ->with(
+                'myMessage'
+            );
+
+        $this->provider
+            ->expects($this->once())
+            ->method('getDuration')
+            ->with($this->audio)
+            ->will($this->throwException(new ProviderException()));
+
+        $constraint = new Audio(
+            array(
+                'formatNotDetectedMessage' => 'myMessage',
+            )
+        );
+
+        $this->validator->validate($this->audio, $constraint);
     }
 
     /**
