@@ -22,6 +22,8 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->video = __DIR__.'/Fixtures/white.m4v';
+
         $this->context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,6 +33,7 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
         $this->provider
             ->expects($this->any())
             ->method('getHeight')
+            ->with($this->video)
             ->will($this->returnValue(240));
 
         $this->provider
@@ -38,11 +41,8 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
             ->method('getWidth')
             ->will($this->returnValue(480));
 
-
         $this->validator = new VideoValidator($this->provider);
         $this->validator->initialize($this->context);
-
-        $this->video = __DIR__.'/Fixtures/white.m4v';
     }
 
     /**
@@ -122,13 +122,6 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWidthTooSmall()
     {
-        $constraint = new Video(
-            array(
-                'minWidth' => 640,
-                'minWidthMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -139,6 +132,13 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
+        $constraint = new Video(
+            array(
+                'minWidth' => 640,
+                'minWidthMessage' => 'myMessage',
+            )
+        );
+
         $this->validator->validate($this->video, $constraint);
     }
 
@@ -147,13 +147,6 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWidthTooBig()
     {
-        $constraint = new Video(
-            array(
-                'maxWidth' => 1,
-                'maxWidthMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -164,6 +157,13 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
+        $constraint = new Video(
+            array(
+                'maxWidth' => 1,
+                'maxWidthMessage' => 'myMessage',
+            )
+        );
+
         $this->validator->validate($this->video, $constraint);
     }
 
@@ -172,13 +172,6 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testHeightTooSmall()
     {
-        $constraint = new Video(
-            array(
-                'minHeight' => 320,
-                'minHeightMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -189,6 +182,13 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
+        $constraint = new Video(
+            array(
+                'minHeight' => 320,
+                'minHeightMessage' => 'myMessage',
+            )
+        );
+
         $this->validator->validate($this->video, $constraint);
     }
 
@@ -197,13 +197,6 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testHeightTooBig()
     {
-        $constraint = new Video(
-            array(
-                'maxHeight' => 1,
-                'maxHeightMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -213,6 +206,13 @@ class VideoValidatorTest extends \PHPUnit_Framework_TestCase
                     '{{ max_height }}' => '1',
                 )
             );
+
+        $constraint = new Video(
+            array(
+                'maxHeight' => 1,
+                'maxHeightMessage' => 'myMessage',
+            )
+        );
 
         $this->validator->validate($this->video, $constraint);
     }

@@ -19,6 +19,8 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $this->audio = __DIR__.'/Fixtures/silence.mp3';
+
         $this->context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
             ->disableOriginalConstructor()
             ->getMock();
@@ -28,12 +30,11 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
         $this->provider
             ->expects($this->any())
             ->method('getDuration')
+            ->with($this->audio)
             ->will($this->returnValue(30.249796));
 
         $this->validator = new AudioValidator($this->provider);
         $this->validator->initialize($this->context);
-
-        $this->audio = __DIR__.'/Fixtures/silence.mp3';
     }
 
     /**
@@ -44,7 +45,7 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
         $this->context = null;
         $this->provider = null;
         $this->validator = null;
-        $this->video = null;
+        $this->audio = null;
     }
 
     /**
@@ -103,13 +104,6 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testDurationTooSmall()
     {
-        $constraint = new Audio(
-            array(
-                'minDuration' => 33,
-                'minDurationMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -120,6 +114,13 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
+        $constraint = new Audio(
+            array(
+                'minDuration' => 33,
+                'minDurationMessage' => 'myMessage',
+            )
+        );
+
         $this->validator->validate($this->audio, $constraint);
     }
 
@@ -128,13 +129,6 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testDurationTooBig()
     {
-        $constraint = new Audio(
-            array(
-                'maxDuration' => 3,
-                'maxDurationMessage' => 'myMessage',
-            )
-        );
-
         $this->context->expects($this->once())
             ->method('addViolation')
             ->with(
@@ -144,6 +138,13 @@ class AudioValidatorTest extends \PHPUnit_Framework_TestCase
                     '{{ max_duration }}' => '3',
                 )
             );
+
+        $constraint = new Audio(
+            array(
+                'maxDuration' => 3,
+                'maxDurationMessage' => 'myMessage',
+            )
+        );
 
         $this->validator->validate($this->audio, $constraint);
     }

@@ -11,6 +11,7 @@ use Toa\Component\Validator\Provider\FFMpegProvider;
  */
 class FFMpegProviderTest extends \PHPUnit_Framework_TestCase
 {
+    protected $ffmpeg;
     protected $provider;
     protected $video;
 
@@ -19,6 +20,8 @@ class FFMpegProviderTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('FFMpeg\FFMpeg')) {
             $this->markTestSkipped('The "FFMpeg" component is not available');
         }
+
+        $this->video = __DIR__.'/../Constraints/Fixtures/white.m4v';
 
         $streamMock = $this->getMockForAbstractClass(
             'FFMpeg\FFProbe\DataMapping\AbstractData',
@@ -49,16 +52,24 @@ class FFMpegProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getStreams')
             ->will($this->returnValue($streamCollectionMock));
 
-        $ffmpegMock = $this->getMock('FFMpeg\FFMpeg', array(), array(), '', false);
-        $ffmpegMock
+        $this->ffmpeg = $this->getMock('FFMpeg\FFMpeg', array(), array(), '', false);
+        $this->ffmpeg
             ->expects($this->any())
             ->method('open')
             ->will($this->returnValue($abstractStreamableMediaMock));
 
 
-        $this->provider = new FFMpegProvider($ffmpegMock);
+        $this->provider = new FFMpegProvider($this->ffmpeg);
+    }
 
-        $this->video = __DIR__.'/../Constraints/Fixtures/white.m4v';
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->ffmpeg = null;
+        $this->provider = null;
+        $this->video = null;
     }
 
     /**
