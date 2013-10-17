@@ -1,7 +1,7 @@
-Validator
-=========
+ToaValidatorComponent
+=====================
 
-Validator Component inspired by [Symfony Validator Component](https://github.com/symfony/Validator).
+This Component extends [Symfony Validator Component](https://github.com/symfony/Validator) ~2.1.
 
 [build]: https://travis-ci.org/toaotc/Validator
 [coverage]: https://scrutinizer-ci.com/g/toaotc/Validator/
@@ -16,3 +16,40 @@ Validator Component inspired by [Symfony Validator Component](https://github.com
 
 [![Latest Stable Version](https://poser.pugx.org/toa/validator/v/stable.png "Latest Stable Version")][package]
 [![Total Downloads](https://poser.pugx.org/toa/validator/downloads.png "Total Downloads")][package]
+
+## Requirements ##
+
+To use [Csv](Constraints/Csv.php) constraint you have to install [Goodby CSV](https://github.com/goodby/csv):
+
+    {
+        "require": {
+            "goodby/csv": "*"
+        }
+    }
+
+To use [Audio](Constraints/Audio.php) or [Video](Constraints/Video.php) constraint you have to install [PHP FFmpeg](https://github.com/alchemy-fr/PHP-FFmpeg):
+
+    {
+        "require": {
+            "php-ffmpeg/php-ffmpeg": "*"
+        }
+    }
+
+
+
+## Installation ##
+
+Add this component to your `composer.json` file:
+
+    {
+        "require": {
+            "toa/validator": "dev-master"
+        }
+    }
+
+## Usage ##
+
+Read the [documentation](Resources/doc/index.md).
+
+General information to use validation constraints can be found in the [Symfony documentation](http://symfony.com/doc/current/book/validation.html).
+
