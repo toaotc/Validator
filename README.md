@@ -8,12 +8,14 @@ This Component extends [Symfony Validator Component](https://github.com/symfony/
 [quality]: https://scrutinizer-ci.com/g/toaotc/Validator/
 [package]: https://packagist.org/packages/toa/validator
 [dependency]: https://www.versioneye.com/user/projects/5230672d632bac1097000a25
+[sensiolabsinsight]: https://insight.sensiolabs.com/projects/8d7861a8-b500-421b-9562-2afee6d9f8bb
 
 [![Build Status](https://travis-ci.org/toaotc/Validator.png)][build]
 [![Code Coverage](https://scrutinizer-ci.com/g/toaotc/Validator/badges/coverage.png?s=4f8c2449ac43420f4aa090eb54f41d7d2e228015)][coverage]
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/toaotc/Validator/badges/quality-score.png?s=07abd70c5408b2fa289be7c37c20b430a08be73e)][quality]
 [![Dependency Status](https://www.versioneye.com/user/projects/5230672d632bac1097000a25/badge.png)][dependency]
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d7861a8-b500-421b-9562-2afee6d9f8bb/mini.png)][sensiolabsinsight]
 [![Latest Stable Version](https://poser.pugx.org/toa/validator/v/stable.png "Latest Stable Version")][package]
 [![Total Downloads](https://poser.pugx.org/toa/validator/downloads.png "Total Downloads")][package]
 
