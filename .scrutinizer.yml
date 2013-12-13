@@ -1,0 +1,25 @@
+filter:
+    excluded_paths:
+        - 'vendor/*'
+tools:
+    external_code_coverage:
+        enabled: true
+        timeout: 600
+    php_cpd:
+        enabled: true
+        excluded_dirs:
+            - 'vendor'
+    php_pdepend:
+        enabled: true
+        excluded_dirs:
+            - 'vendor'
+    php_loc:
+        enabled: true
+        excluded_dirs:
+            - 'vendor'
+    php_mess_detector:
+        config:
+            ruleset: phpmd_rules.xml
+
+    php_analyzer: true
+    sensiolabs_security_checker: true
