@@ -17,9 +17,9 @@ tools:
         enabled: true
         excluded_dirs:
             - 'vendor'
-    php_mess_detector:
-        config:
-            ruleset: phpmd_rules.xml
-
+    php_mess_detector: true
     php_analyzer: true
     sensiolabs_security_checker: true
+
+before_commands:
+    - 'composer require --dev --no-interaction goodby/csv:* php-ffmpeg/php-ffmpeg:*'
