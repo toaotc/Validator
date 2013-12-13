@@ -2,24 +2,16 @@ filter:
     excluded_paths:
         - 'vendor/*'
 tools:
-    external_code_coverage:
-        enabled: true
-        timeout: 600
-    php_cpd:
-        enabled: true
-        excluded_dirs:
-            - 'vendor'
-    php_pdepend:
-        enabled: true
-        excluded_dirs:
-            - 'vendor'
-    php_loc:
-        enabled: true
-        excluded_dirs:
-            - 'vendor'
     php_mess_detector: true
+    php_cs_fixer: true
     php_analyzer: true
+    php_code_sniffer: true
     sensiolabs_security_checker: true
+    php_code_coverage: true
+    php_cpd: true
+    php_loc: true
+    php_pdepend: true
+    external_code_coverage: true
 
 before_commands:
     - 'composer require --dev --no-interaction goodby/csv:* php-ffmpeg/php-ffmpeg:*'
