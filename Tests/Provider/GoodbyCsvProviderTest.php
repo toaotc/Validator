@@ -30,7 +30,7 @@ class GoodbyCsvProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCountRowsIsValid()
     {
-        $this->assertEquals(4, $this->provider->countRows($this->csv));
+        $this->assertEquals(3, $this->provider->countRows($this->csv));
     }
 
     /**
@@ -42,10 +42,9 @@ class GoodbyCsvProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('array', $columnSizes);
         $this->assertSame($this->provider->collectColumnSizes($this->csv), $columnSizes);
-        $this->assertCount(2, $columnSizes);
+        $this->assertCount(1, $columnSizes);
         $this->assertArrayHasKey(3, $columnSizes);
-        $this->assertEquals(array(1, 2, 4), $columnSizes[3]);
-        $this->assertArrayHasKey(0, $columnSizes);
-        $this->assertEquals(array(3), $columnSizes[0]);
+        $this->assertEquals(array(1, 2, 3), $columnSizes[3]);
+        $this->assertArrayNotHasKey(0, $columnSizes);
     }
 }
