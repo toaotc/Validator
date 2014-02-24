@@ -3,20 +3,20 @@ Csv
 
 ## Options ##
 
-- [mimeTypes](#mimeTypes)
+- [mimeTypes](#mimetypes)
 - [delimiter](#delimiter)
 - [enclosure](#enclosure)
 - [escape](#escape)
-- [maxColumns](#maxColumns)
-- [minColumns](#minColumns)
-- [maxRows](#maxRows)
-- [minRows](#minRows)
-- [ignoreEmptyColumns](#ignoreEmptyColumns)
-- [maxColumnsMessage](#maxColumnsMessage)
-- [minColumnsMessage](#minColumnsMessage)
-- [maxRowsMessage](#maxRowsMessage)
-- [minRowsMessage](#minRowsMessage)
-- [emptyColumnsMessage](#emptyColumnsMessage)
+- [maxColumns](#maxcolumns)
+- [minColumns](#mincolumns)
+- [maxRows](#maxrows)
+- [minRows](#minrows)
+- [ignoreEmptyColumns](#ignoreemptycolumns)
+- [maxColumnsMessage](#maxcolumnsmessage)
+- [minColumnsMessage](#mincolumnsmessage)
+- [maxRowsMessage](#maxrowsmessage)
+- [minRowsMessage](#minrowsmessage)
+- [emptyColumnsMessage](#emptycolumnsmessage)
 - See [File](http://symfony.com/doc/current/reference/constraints/File.html) for inherited options
 
 ## Basic usage
@@ -52,7 +52,7 @@ Csv
 
 ## Reference
 
-#### [mimeTypes](id:mimeTypes)
+#### [mimeTypes](id:mimetypes)
 
 **type**:    `array` or `string`  
 **default**: `text/*`
@@ -72,68 +72,68 @@ Csv
 **type**:    `string`  
 **default**: `\\`
 
-#### [maxColumns](id:maxColumns)
+#### [maxColumns](id:maxcolumns)
 
 **type**:    `integer`
 
 If set, the column count of each row must be less than or equal to this value.
 
-#### [minColumns](id:minColumns)
+#### [minColumns](id:mincolumns)
 
 **type**:    `integer`
 
 If set, the column count of each row must be greater than or equal to this value.
 
-#### [maxRows](id:maxRows)
+#### [maxRows](id:maxrows)
 
 **type**:    `integer`
 
 If set, the row count of the file must be less than or equal to this value.
 
-#### [minRows](id:minRows)
+#### [minRows](id:minrows)
 
 **type**:    `integer`
 
 If set, the row count of the file must be greater than or equal to this value.
 
-#### [ignoreEmptyColumns](id:ignoreEmptyColumns)
+#### [ignoreEmptyColumns](id:ignoreemptycolumns)
 
 **type**:    `boolean`
 **default**: `true`
 
 If set to `false`, the file must not contain empty lines. Also now new line at the end of the file is allowed.
 
-#### [maxColumnsMessage](id:maxColumnsMessage)
+#### [maxColumnsMessage](id:maxcolumnsmessage)
 
 **type**:    `string`  
 **default**: `Each line should contain max. {{ max_columns }} columns.`
 
-The message displayed if the column count of a row exceeds [maxColumns](#maxColumns).
+The message displayed if the column count of a row exceeds [maxColumns](#maxcolumns).
 
-#### [minColumnsMessage](id:minColumnsMessage)
+#### [minColumnsMessage](id:mincolumnsmessage)
 
 **type**:    `string`  
 **default**: `Each line should contain min. {{ min_columns }} columns.`
 
-The message displayed if the column count of a row is less then [minColumns](#minColumns).
+The message displayed if the column count of a row is less then [minColumns](#mincolumns).
 
-#### [maxRowsMessage](id:maxRowsMessage)
+#### [maxRowsMessage](id:maxrowsmessage)
 
 **type**:    `string`  
 **default**: `File should contain max. {{ max_rows }} rows.`
 
-The message displayed if the row count of the file exceeds [maxRows](#maxRows).
+The message displayed if the row count of the file exceeds [maxRows](#maxrows).
 
-#### [minRowsMessage](id:minRowsMessage)
+#### [minRowsMessage](id:minrowsmessage)
 
 **type**:    `string`  
 **default**: `File should contain min. {{ min_rows }} rows.`
 
-The message displayed if the row count of the file is less then [minRows](#minRows).
+The message displayed if the row count of the file is less then [minRows](#minrows).
 
-#### [emptyColumnsMessage](id:emptyColumnsMessage)
+#### [emptyColumnsMessage](id:emptycolumnsmessage)
 
 **type**:    `string`  
 **default**: `Found empty columns.`
 
-The message displayed if a row of the file contains no columns - depends on [ignoreEmptyColumns](#ignoreEmptyColumns).
+The message displayed if a row of the file contains no columns - depends on [ignoreEmptyColumns](#ignoreemptycolumns).

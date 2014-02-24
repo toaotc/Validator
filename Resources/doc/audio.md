@@ -3,13 +3,13 @@ Audio
 
 ## Options ##
 
-- [mimeTypes](#mimeTypes)
-- [mimeTypesMessage](#mimeTypesMessage)
-- [formatNotDetectedMessage](#formatNotDetectedMessage)
-- [maxDuration](#maxDuration)
-- [minDuration](#minDuration)
-- [maxDurationMessage](#maxDurationMessage)
-- [minDurationMessage](#minDurationMessage)
+- [mimeTypes](#mimetypes)
+- [mimeTypesMessage](#mimetypesmessage)
+- [formatNotDetectedMessage](#formatnotdetectedmessage)
+- [maxDuration](#maxduration)
+- [minDuration](#minduration)
+- [maxDurationMessage](#maxdurationmessage)
+- [minDurationMessage](#mindurationmessage)
 - See [File](http://symfony.com/doc/current/reference/constraints/File.html) for inherited options
 
 ## Basic usage
@@ -46,45 +46,45 @@ Audio
 
 ## Reference
 
-#### [mimeTypes](id:mimeTypes)
+#### [mimeTypes](id:mimetypes)
 
 **type**:    `array` or `string`  
 **default**: `audio/*`
 
-#### [mimeTypesMessage](id:mimeTypesMessage)
+#### [mimeTypesMessage](id:mimetypesmessage)
 
 **type**:    `string`  
 **default**: `This file is not a valid audio.`
 
-#### [formatNotDetectedMessage](id:formatNotDetectedMessage)
+#### [formatNotDetectedMessage](id:formatnotdetectedmessage)
 
 **type**:    `string`  
 **default**: `The format of the audio could not be detected.`
 
 The message displayed if the provider could not retrieve validatable data for the file.
 
-#### [maxDuration](id:maxDuration)
+#### [maxDuration](id:maxduration)
 
 **type**:    `integer`
 
 If set, the duration of the file must be less than or equal to this value in seconds.
 
-#### [minDuration](id:minDuration)
+#### [minDuration](id:minduration)
 
 **type**:    `integer`
 
 If set, the duration of the file must be greater than or equal to this valuein seconds.
 
-#### [maxDurationMessage](id:maxDurationMessage)
+#### [maxDurationMessage](id:maxdurationmessage)
 
 **type**:    `string`  
 **default**: `The audio is too long ({{ duration }} seconds). Allowed maximum duration is {{ max_duration }} seconds.`
 
-The message displayed if the duration of the file exceeds [maxDuration](#maxDuration).
+The message displayed if the duration of the file exceeds [maxDuration](#maxduration).
 
-#### [minDurationMessage](id:minDurationMessage)
+#### [minDurationMessage](id:mindurationmessage)
 
 **type**:    `string`  
 **default**: `The audio is too short ({{ duration }} seconds). Minimum duration expected is {{ min_duration }} seconds.`
 
-The message displayed if the duration of the file is less then [minDuration](#minDuration).
+The message displayed if the duration of the file is less then [minDuration](#minduration).
