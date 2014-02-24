@@ -55,7 +55,7 @@ Csv
 #### [mimeTypes](id:mimeTypes)
 
 **type**:    `array` or `string`  
-**default**: `image/*`
+**default**: `text/*`
 
 #### [delimiter](id:delimiter)
 
